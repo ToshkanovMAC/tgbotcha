@@ -82,7 +82,7 @@ bot.on("inline_query", async (ctx) => {
 
   try {
     const { data } = await axios.get(
-      "https://backend12dars.onrender.com/products"
+      "https://tgbotcha.onrender.com"
     );
 
     const filtered = data.filter((p) => p.name.toLowerCase().includes(query));
@@ -131,7 +131,7 @@ bot.command("create", async (ctx) => {
     }
 
     let updProd = await axios.post(
-      "https://backend12dars.onrender.com/products",
+      "https://tgbotcha.onrender.com",
       {
         name,
         price,
@@ -159,7 +159,7 @@ bot.command("update", async (ctx) => {
     let count = parts[4].trim();
 
     if (id.length < 23) {
-      throw new Error("Id is not mongo id");
+      throw new Error("bu id mavjud emas");
     }
 
     if (name && price && count) {
@@ -171,7 +171,7 @@ bot.command("update", async (ctx) => {
     }
 
     let updProd = await axios.patch(
-      `https://backend12dars.onrender.com/products/${id}`,
+      `https://tgbotcha.onrender.com/products/${id}`,
       {
         name,
         price,
@@ -182,11 +182,11 @@ bot.command("update", async (ctx) => {
     if (updProd.status == 200) {
       ctx.reply("Product o'zgartirildi!");
     } else {
-      ctx.reply("Xatolik, iltimos mavjud bolgan idni yozing");
+      ctx.reply("iltimos mavjud bolgan idni yozing");
     }
   } catch (e) {
     ctx.reply(
-      "O'zgartirmoqchi bolgan tovaringiz notog'ri formatda berilgan!!! Qayna urinib ko'ring"
+      "notog'ri formatda berilgan!!! Qayna urinib ko'ring"
     );
   }
 });
@@ -198,28 +198,28 @@ bot.command("delete", async (ctx) => {
     let id = parts[1].trim();
 
     if (id.length < 23) {
-      throw new Error("Id is not mongo id");
+      throw new Error("bu id mavjud emas");
     }
 
     let delPrd = await axios.delete(
-      `https://backend12dars.onrender.com/products/${id}`
+      `https://tgbotcha.onrender.com/products/${id}`
     );
 
     if (delPrd.status == 200) {
       ctx.reply(`${delPrd.data.name} o'chirildi!`);
     } else {
-      ctx.reply("Xatolik, iltimos mavjud bolgan idni yozing");
+      ctx.reply("iltimos mavjud bolgan idni yozing");
     }
   } catch (e) {
     ctx.reply(
-      "O'chirmoqchi bolgan tovaringiz id notog'ri formatda berilgan!!! Qayna urinib ko'ring"
+      "id notog'ri formatda berilgan!!! Qayna urinib ko'ring"
     );
   }
 });
 
 bot.command("products", async (ctx) => {
   const { data } = await axios.get(
-    "https://backend12dars.onrender.com/products"
+    "https://tgbotcha.onrender.com/products"
   );
   for (const prod of data) {
     ctx.reply(`${prod.name}\nid: ${prod._id}`);
